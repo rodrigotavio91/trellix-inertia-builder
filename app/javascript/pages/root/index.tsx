@@ -39,7 +39,7 @@ export default function Index() {
           </Link>
           <div className="h-full border-r border-slate-500" />
           <Link
-            href="/login"
+            href="/session/new"
             className="text-xl font-medium text-brand-aqua underline"
           >
             Login
