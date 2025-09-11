@@ -1,6 +1,7 @@
 import { createInertiaApp } from '@inertiajs/react'
 import { createElement, ReactNode } from 'react'
 import { createRoot } from 'react-dom/client'
+import { Root } from '../root'
 
 // Temporary type definition, until @inertiajs/react provides one
 type ResolvedComponent = {
@@ -37,14 +38,19 @@ createInertiaApp({
     return page
   },
 
-  setup({ el, App, props }) {
+  setup({ el, App: Page, props }) {
     if (el) {
-      createRoot(el).render(createElement(App, props))
+      createRoot(el).render(
+        <Root>
+          <Page {...props} />
+        </Root>
+      )
+
     } else {
       console.error(
         'Missing root element.\n\n' +
-          'If you see this error, it probably means you load Inertia.js on non-Inertia pages.\n' +
-          'Consider moving <%= vite_typescript_tag "inertia" %> to the Inertia-specific layout instead.',
+        'If you see this error, it probably means you load Inertia.js on non-Inertia pages.\n' +
+        'Consider moving <%= vite_typescript_tag "inertia" %> to the Inertia-specific layout instead.',
       )
     }
   },
