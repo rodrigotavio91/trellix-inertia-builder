@@ -12,7 +12,9 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "root#index"
 
-  resource :session
+  resource :session, only: %i[new create destroy]
   resources :passwords, param: :token
-  resources :users
+  resources :users, only: %i[new create]
+  resources :home, only: %i[index]
+  resources :boards, only: %i[show create update destroy]
 end

@@ -1,0 +1,1 @@
+prop.boards @boards, partial: "boards/board", as: :board

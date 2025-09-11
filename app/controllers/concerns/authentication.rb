@@ -27,7 +27,7 @@ module Authentication
     end
 
     def require_not_authenticated
-      redirect_to root_url if authenticated?
+      redirect_to after_authentication_url if authenticated?
     end
 
     def resume_session
@@ -44,7 +44,7 @@ module Authentication
     end
 
     def after_authentication_url
-      session.delete(:return_to_after_authenticating) || root_url
+      session.delete(:return_to_after_authenticating) || home_index_url
     end
 
     def start_new_session_for(user)

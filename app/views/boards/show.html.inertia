@@ -1,0 +1,5 @@
+prop.board do
+  prop.id @board.id
+  prop.name @board.name
+  prop.color @board.color
+end
