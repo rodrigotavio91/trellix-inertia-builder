@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  allow_unauthenticated_access only: %i[ new create ]
+  prevent_authenticated_access
+
   rate_limit to: 10, within: 3.minutes, only: :create, with: -> { redirect_to new_user_url, inertia: { errors: "Try again later." } }
 
   def new

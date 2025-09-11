@@ -32,7 +32,7 @@ export default function Index() {
         </div>
         <div className="flex w-full justify-evenly max-w-md mt-8 rounded-3xl p-10 bg-slate-800">
           <Link
-            href="/signup"
+            href="/users/new"
             className="text-xl font-medium text-brand-aqua underline"
           >
             Sign up

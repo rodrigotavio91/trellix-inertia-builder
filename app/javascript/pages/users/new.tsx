@@ -3,8 +3,6 @@ import { Button } from "../../components/button";
 import { Label, Input } from "../../components/input";
 
 export default function Signup() {
-  let actionResult: any = {}
-
   return (
     <>
       <Head>
@@ -23,56 +21,60 @@ export default function Signup() {
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-[480px]">
           <div className="bg-white px-6 py-12 shadow sm:rounded-lg sm:px-12">
             <Form className="space-y-6" method="post" action="/users">
-              <div>
-                <Label htmlFor="email">
-                  Email address{" "}
-                  {actionResult?.errors?.email && (
-                    <span id="email-error" className="text-brand-red">
-                      {actionResult.errors.email}
-                    </span>
-                  )}
-                </Label>
-                <Input
-                  autoFocus
-                  id="email"
-                  name="email_address"
-                  type="email"
-                  autoComplete="email"
-                  aria-describedby={
-                    actionResult?.errors?.email ? "email-error" : "signup-header"
-                  }
-                  required
-                />
-              </div>
+              {({ errors }) => (
+                <>
+                  <div>
+                    <Label htmlFor="email">
+                      Email address{" "}
+                      {errors?.email && (
+                        <span id="email-error" className="text-brand-red">
+                          {errors.email}
+                        </span>
+                      )}
+                    </Label>
+                    <Input
+                      autoFocus
+                      id="email"
+                      name="email_address"
+                      type="email"
+                      autoComplete="email"
+                      aria-describedby={
+                        errors?.email ? "email-error" : "signup-header"
+                      }
+                      required
+                    />
+                  </div>
 
-              <div>
-                <Label htmlFor="password">
-                  Password{" "}
-                  {actionResult?.errors?.password && (
-                    <span id="password-error" className="text-brand-red">
-                      {actionResult.errors.password}
-                    </span>
-                  )}
-                </Label>
-                <Input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  aria-describedby="password-error"
-                  required
-                />
-              </div>
+                  <div>
+                    <Label htmlFor="password">
+                      Password{" "}
+                      {errors?.password && (
+                        <span id="password-error" className="text-brand-red">
+                          {errors.password}
+                        </span>
+                      )}
+                    </Label>
+                    <Input
+                      id="password"
+                      name="password"
+                      type="password"
+                      autoComplete="current-password"
+                      aria-describedby="password-error"
+                      required
+                    />
+                  </div>
 
-              <Button type="submit">Sign in</Button>
+                  <Button type="submit">Sign in</Button>
 
-              <div className="text-sm text-slate-500">
-                Already have an account?{" "}
-                <Link className="underline" href="/session/new">
-                  Log in
-                </Link>
-                .
-              </div>
+                  <div className="text-sm text-slate-500">
+                    Already have an account?{" "}
+                    <Link className="underline" href="/session/new">
+                      Log in
+                    </Link>
+                    .
+                  </div>
+                </>
+              )}
             </Form>
           </div>
           <div className="mt-8 space-y-2 mx-2">

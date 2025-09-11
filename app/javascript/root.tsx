@@ -1,8 +1,8 @@
-import { Link } from '@inertiajs/react'
+import { Form, Link } from '@inertiajs/react'
 import { LogoutIcon, LoginIcon } from './icons/icons';
+import type { User } from './types/user';
 
-export const Root = ({ children }: { children: React.ReactNode }) => {
-  let userId = null;
+export const Root = ({ children, user }: { children: React.ReactNode, user?: User }) => {
   return (
     <div className="h-screen bg-slate-100 text-slate-900">
       <div className="h-full flex flex-col min-h-0">
@@ -29,8 +29,8 @@ export const Root = ({ children }: { children: React.ReactNode }) => {
             />
           </div>
           <div className="w-1/3 flex justify-end">
-            {userId ? (
-              <form method="post" action="/logout">
+            {user ? (
+              <Form method="delete" action="/session">
                 <button className="block text-center">
                   <LogoutIcon />
                   <br />
@@ -38,9 +38,9 @@ export const Root = ({ children }: { children: React.ReactNode }) => {
                     Log out
                   </span>
                 </button>
-              </form>
+              </Form>
             ) : (
-              <Link href="/login" className="block text-center">
+              <Link href="/session/new" className="block text-center">
                 <LoginIcon />
                 <br />
                 <span className="text-slate-500 text-xs uppercase font-bold">

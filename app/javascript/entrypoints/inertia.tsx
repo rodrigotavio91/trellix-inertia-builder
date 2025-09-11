@@ -1,12 +1,11 @@
 import { createInertiaApp } from '@inertiajs/react'
-import { createElement, ReactNode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { Root } from '../root'
 
 // Temporary type definition, until @inertiajs/react provides one
 type ResolvedComponent = {
-  default: ReactNode
-  layout?: (page: ReactNode) => ReactNode
+  default: ResolvedComponent
+  layout?: (page: React.ReactNode) => React.ReactNode
 }
 
 createInertiaApp({
@@ -29,21 +28,15 @@ createInertiaApp({
       console.error(`Missing Inertia page component: '${name}.tsx'`)
     }
 
-    // To use a default layout, import the Layout component
-    // and use the following line.
-    // see https://inertia-rails.dev/guide/pages#default-layouts
-    //
-    // page.default.layout ||= (page) => createElement(Layout, null, page)
+    page.default.layout ||= (page) => <Root {...page.props} children={page} />
 
     return page
   },
 
-  setup({ el, App: Page, props }) {
+  setup({ el, App, props }) {
     if (el) {
       createRoot(el).render(
-        <Root>
-          <Page {...props} />
-        </Root>
+        <App {...props} />
       )
 
     } else {
