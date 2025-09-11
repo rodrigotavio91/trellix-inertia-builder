@@ -5,7 +5,6 @@ export default function Index() {
     <>
       <Head>
         <title>Trellix, a Remix Demo</title>
-        <meta name="description" content="Your page description" />
       </Head>
       <div className="h-full flex flex-col items-center pt-20 bg-slate-900">
         <img src="/remix-logo-new@dark.png" width="402" height="149" />

@@ -1,0 +1,5 @@
+prop.id item.id
+prop.column_id item.column_id
+prop.title item.title
+prop.content item.content
+prop.order item.order

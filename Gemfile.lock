@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/rodrigotavio91/inertia-builder.git
+  revision: 504ea506144db95ad2073c009d1e70cf25038c00
+  branch: main
+  specs:
+    inertia_builder (0.2.0)
+      inertia_rails (~> 3.5)
+      jbuilder (~> 2.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -121,9 +130,6 @@ GEM
       actionpack (>= 6.0.0)
       activesupport (>= 6.0.0)
       railties (>= 6.0.0)
-    inertia_builder (0.2.0)
-      inertia_rails (~> 3.5)
-      jbuilder (~> 2.0)
     inertia_rails (3.11.0)
       railties (>= 6)
     io-console (0.8.1)
@@ -388,7 +394,7 @@ DEPENDENCIES
   capybara
   debug
   importmap-rails
-  inertia_builder
+  inertia_builder!
   inertia_rails (~> 3.11)
   jbuilder
   kamal

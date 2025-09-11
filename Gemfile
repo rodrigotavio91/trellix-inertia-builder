@@ -66,4 +66,4 @@ gem "inertia_rails", "~> 3.11"
 
 gem "vite_rails", "~> 3.0"
 
-gem "inertia_builder"
+gem "inertia_builder", github: "rodrigotavio91/inertia-builder", branch: "main"

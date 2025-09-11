@@ -2,4 +2,6 @@ prop.board do
   prop.id @board.id
   prop.name @board.name
   prop.color @board.color
+  prop.columns @board.columns, partial: "columns/column", as: :column
+  prop.items @board.items.order(:order), partial: "items/item", as: :item
 end

@@ -9,6 +9,14 @@ class BoardsController < ApplicationController
     redirect_to board
   end
 
+  def update
+    board = Board.find(params.require(:id))
+
+    board.update!(params.permit(:id, :name, :color))
+
+    redirect_to board
+  end
+
   def destroy
     Board.find(params.require(:id)).destroy!
 

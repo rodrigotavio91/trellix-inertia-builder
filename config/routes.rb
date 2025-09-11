@@ -17,4 +17,6 @@ Rails.application.routes.draw do
   resources :users, only: %i[new create]
   resources :home, only: %i[index]
   resources :boards, only: %i[show create update destroy]
+  resources :columns, only: %i[create update destroy]
+  resources :items, only: %i[create update destroy]
 end

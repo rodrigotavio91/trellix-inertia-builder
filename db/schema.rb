@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_09_11_165119) do
+ActiveRecord::Schema[8.0].define(version: 2025_09_11_171204) do
   create_table "boards", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "name", null: false
@@ -18,6 +18,27 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_11_165119) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_boards_on_user_id"
+  end
+
+  create_table "columns", force: :cascade do |t|
+    t.integer "board_id", null: false
+    t.string "name", null: false
+    t.float "order", default: 0.0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["board_id"], name: "index_columns_on_board_id"
+  end
+
+  create_table "items", force: :cascade do |t|
+    t.integer "board_id", null: false
+    t.integer "column_id", null: false
+    t.string "title", null: false
+    t.string "content"
+    t.float "order", default: 0.0, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["board_id"], name: "index_items_on_board_id"
+    t.index ["column_id"], name: "index_items_on_column_id"
   end
 
   create_table "sessions", force: :cascade do |t|
@@ -38,5 +59,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_09_11_165119) do
   end
 
   add_foreign_key "boards", "users"
+  add_foreign_key "columns", "boards"
+  add_foreign_key "items", "boards"
+  add_foreign_key "items", "columns"
   add_foreign_key "sessions", "users"
 end
