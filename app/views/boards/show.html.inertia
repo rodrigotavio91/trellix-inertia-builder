@@ -1,5 +1,5 @@
 prop.board do
   prop.partial! "boards/board", board: @board
-  prop.columns @board.columns, partial: "columns/column", as: :column
-  prop.items @board.items.order(:order), partial: "items/item", as: :item
+  prop.columns @board.columns, partial: "columns/column", as: :column, cached: true
+  prop.items @board.items.order(:order), partial: "items/item", as: :item, cached: true
 end

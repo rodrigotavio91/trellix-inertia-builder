@@ -1,1 +1,1 @@
-prop.boards @boards, partial: "boards/board", as: :board
+prop.boards @boards, partial: "boards/board", as: :board, cached: true
