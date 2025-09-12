@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import type { Board, BoardWithColumnsAndItems, Column as ColumnType } from "../../types/board";
+import type { Board, BoardWithColumnsAndItems, Column as ColumnType, Item } from "../../types/board";
 import invariant from "tiny-invariant";
 import { EditableText } from "./components";
 import { NewColumn } from "./new-column";
@@ -12,33 +12,14 @@ export const CONTENT_TYPES = {
 };
 
 export default function Board({ board }: { board: BoardWithColumnsAndItems }) {
-  let itemsById = new Map(board.items.map((item) => [item.id, item]));
-
-  // let pendingItems = usePendingItems();
-
-  // merge pending items and existing items
-  // for (let pendingItem of pendingItems) {
-  //   let item = itemsById.get(pendingItem.id);
-  //   let merged = item
-  //     ? { ...item, ...pendingItem }
-  //     : { ...pendingItem, boardId: board.id };
-  //   itemsById.set(pendingItem.id, merged);
-  // }
-
-  // merge pending and existing columns
-  // let optAddingColumns = usePendingColumns();
-  // type Column =
-  //   | (typeof board.columns)[number]
-  //   | (typeof optAddingColumns)[number];
-  // type ColumnWithItems = Column & { items: typeof board.items };
-  let columns = new Map<number, ColumnType>();
+  let columns = new Map<number, ColumnType & { items: Item[] }>();
   for (let column of board.columns) {
     columns.set(column.id, { ...column, items: [] });
   }
 
   // add items to their columns
-  for (let item of itemsById.values()) {
-    let columnId = item.column_id;
+  for (let item of board.items) {
+    let columnId = parseInt(item.column_id.toString());
     let column = columns.get(columnId);
     invariant(column, "missing column");
     column.items.push(item);

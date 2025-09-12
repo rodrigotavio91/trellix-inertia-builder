@@ -4,10 +4,10 @@ import invariant from "tiny-invariant";
 import { Icon } from "../../icons/icons";
 import { EditableText } from "./components";
 import { NewCard } from "./new-card";
-import { Item } from "../../types/board";
+import { Board, BoardWithColumnsAndItems, Item } from "../../types/board";
 import { CONTENT_TYPES } from "./show";
 import { Card } from "./card";
-import { router } from '@inertiajs/react'
+import { router, usePage } from '@inertiajs/react'
 
 interface ColumnProps {
   name: string;
@@ -54,9 +54,31 @@ export function Column({ name, boardId, columnId, items }: ColumnProps) {
         router.put(`/items/${transfer.id}`, {
           column_id: columnId,
           order: 1,
+        }, {
+          showProgress: false,
         })
 
-        setAcceptDrop(false);
+        router.replace({
+          preserveState: true,
+          props: (current: { board: BoardWithColumnsAndItems }) => (
+            {
+              ...current,
+              board: {
+                ...current.board,
+                items: current.board.items.map(item => {
+                  if (item.id === transfer.id) {
+                    return { ...item, column_id: columnId, order: 1 };
+                  } else {
+                    return item
+                  }
+                })
+              }
+            }
+          ),
+          onFinish: () => {
+            setAcceptDrop(false);
+          }
+        })
       }}
     >
       <div className="p-2">

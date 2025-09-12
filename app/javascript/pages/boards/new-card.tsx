@@ -1,7 +1,8 @@
-import { Form } from "@inertiajs/react";
+import { Form, router } from "@inertiajs/react";
 import { useRef } from "react";
 import invariant from "tiny-invariant";
 import { SaveButton, CancelButton } from "./components";
+import { BoardWithColumnsAndItems } from "../../types/board";
 
 export function NewCard({
   boardId,
@@ -24,10 +25,26 @@ export function NewCard({
       method="post"
       action="/items"
       className="flex flex-col gap-2.5 p-2 pt-1"
-      onSuccess={() => {
-        invariant(textAreaRef.current);
-        textAreaRef.current.value = "";
-        onAddCard();
+      showProgress={false}
+      async={false}
+      onStart={(request) => {
+        router.replace({
+          preserveState: true,
+          props: (current: { board: BoardWithColumnsAndItems }) => (
+            {
+              ...current,
+              board: {
+                ...current.board,
+                items: [...current.board.items, request.data]
+              }
+            }
+          ),
+          onSuccess: () => {
+            invariant(textAreaRef.current);
+            textAreaRef.current.value = "";
+            onAddCard();
+          }
+        })
       }}
       onBlur={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget)) {

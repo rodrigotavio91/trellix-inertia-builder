@@ -3,6 +3,7 @@ import invariant from "tiny-invariant";
 import { Icon } from "../../icons/icons";
 import { CONTENT_TYPES } from "./show";
 import { Form, router } from "@inertiajs/react";
+import { BoardWithColumnsAndItems } from "../../types/board";
 
 interface CardProps {
   title: string;
@@ -23,11 +24,11 @@ export function Card({
   nextOrder,
   previousOrder,
 }: CardProps) {
-  let isDeleting = false
+  const [deleted, setDeleted] = useState(false);
 
   let [acceptDrop, setAcceptDrop] = useState<"none" | "top" | "bottom">("none");
 
-  return isDeleting ? null : (
+  return deleted ? null : (
     <li
       onDragOver={(event) => {
         if (event.dataTransfer.types.includes(CONTENT_TYPES.card)) {
@@ -56,9 +57,32 @@ export function Card({
         router.put(`/items/${transfer.id}`, {
           column_id: columnId,
           order: moveOrder,
+        }, {
+          showProgress: false,
         })
 
-        setAcceptDrop("none");
+        router.replace({
+          preserveState: true,
+          props: (current: { board: BoardWithColumnsAndItems }) => (
+            {
+              ...current,
+              board: {
+                ...current.board,
+                items: current.board.items.map(item => {
+                  if (item.id === transfer.id) {
+                    return { ...item, column_id: columnId, order: moveOrder };
+                  } else {
+                    return item
+                  }
+                })
+              }
+            }
+          ),
+          onFinish: () => {
+            setAcceptDrop("none");
+          }
+        })
+
       }}
       className={
         "border-t-2 border-b-2 -mb-[2px] last:mb-0 cursor-grab active:cursor-grabbing px-2 py-1 " +
@@ -70,7 +94,7 @@ export function Card({
       }
     >
       <div
-        draggable
+        draggable={!!id}
         className="bg-white shadow shadow-slate-300 border-slate-300 text-sm rounded-lg w-full py-1 px-2 relative"
         onDragStart={(event) => {
           event.dataTransfer.effectAllowed = "move";
@@ -82,11 +106,12 @@ export function Card({
       >
         <h3>{title}</h3>
         <div className="mt-2">{content || <>&nbsp;</>}</div>
-        <Form method="delete" action={`/items/${id}`}>
+        <Form method="delete" action={`/items/${id}`} onStart={() => setDeleted(true)} showProgress={false}>
           <button
             aria-label="Delete card"
-            className="absolute top-4 right-4 hover:text-brand-red"
+            className="absolute top-4 right-4 hover:text-brand-red disabled:opacity-50"
             type="submit"
+            disabled={!id}
             onClick={(event) => {
               event.stopPropagation();
             }}

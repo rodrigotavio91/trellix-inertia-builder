@@ -63,10 +63,9 @@ export function EditableText({
     <Form
       method="put"
       action={action}
+      showProgress={false}
       onStart={({ data }) => {
         setCurrentValue(data[fieldName])
-      }}
-      onSuccess={() => {
         flushSync(() => {
           setEdit(false);
         });

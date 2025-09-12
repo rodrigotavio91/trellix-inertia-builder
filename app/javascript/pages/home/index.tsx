@@ -3,6 +3,7 @@ import { Button } from "../../components/button";
 import { LabeledInput, Label } from "../../components/input";
 import { Icon } from "../../icons/icons";
 import type { Board } from "../../types/board";
+import { useState } from "react";
 
 export default function Projects({ boards }: { boards: Board[] }) {
   return (
@@ -40,15 +41,16 @@ function Board({
   id: number;
   color: string;
 }) {
-  let isDeleting = false;
-  return isDeleting ? null : (
+  const [deleted, setDeleted] = useState(false);
+
+  return deleted ? null : (
     <Link
       href={`/boards/${id}`}
       className="w-60 h-40 p-4 block border-b-8 shadow rounded hover:shadow-lg bg-white relative"
       style={{ borderColor: color }}
     >
       <div className="font-bold">{name}</div>
-      <Form method="delete" action={`/boards/${id}`}>
+      <Form method="delete" action={`/boards/${id}`} showProgress={false} onStart={() => setDeleted(true)}>
         <button
           aria-label="Delete board"
           className="absolute top-4 right-4 hover:text-brand-red"
