@@ -1,24 +1,17 @@
-# README
+# Trellix
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A clone of [Remix's Trellix](https://github.com/remix-run/example-trellix) built with Ruby on Rails and [Inertia.js](https://inertiajs.com/).
 
-Things you may want to cover:
+## Running Locally
 
-* Ruby version
+Setup the project:
 
-* System dependencies
+```bash
+bin/setup
+```
 
-* Configuration
+Running the server:
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```bash
+bin/dev
+```
